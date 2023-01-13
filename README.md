@@ -1,5 +1,5 @@
 # gb-java-core
-GeekBrains Course Java-Core repository
+GeekBrains Course Java-OOP repository
 ## About me
 ptsypyshev (Цыпышев Павел)  
 https://gb.ru/users/2008377
