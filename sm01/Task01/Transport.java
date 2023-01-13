@@ -57,7 +57,4 @@ public class Transport {
         return String.format("Type: %s, Model: %s, Color: %s, Wheels: %d, Weight: %d, Speed: %d",
          this.type, this.model, this.color, this.wheels, this.weight, this.speed);
     }
-    
-
-    
 }

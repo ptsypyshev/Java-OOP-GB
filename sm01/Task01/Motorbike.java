@@ -4,8 +4,7 @@ public class Motorbike extends Transport{
     public Motorbike(String color, String model, int wheels, int weight, int speed) {
         super(color, model, wheels, weight, speed);
         this.type = "Motorbike";
-    }
-    
+    }    
 
     @Override
     public void drive() {
