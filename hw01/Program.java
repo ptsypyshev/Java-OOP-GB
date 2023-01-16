@@ -1,7 +1,6 @@
 package hw01;
 
 import java.time.LocalDate;
-import hw01.Diapers.DiapersTypes;
 import java.sql.Date;
 
 public class Program {
@@ -25,7 +24,7 @@ public class Program {
         Product mask1 = new FaceMasks("Max factor face mask", 299.99, 20, "sachet", 1);
         Product toiletPaper1 = new ToiletPaper("Zeva Deluxe", 300, 100, "package", 12, 3);
         Product pampers1 = new Diapers("Pampers", 2999.99, 30, "box", 
-            0, false, 2, 3, 6, DiapersTypes.REGULAR_DIAPERS);
+            0, false, 2, 3, 6, Diapers.DiapersTypes.REGULAR_DIAPERS);
         Product pacifier1 = new Pacifier("Philips", 799.99, 3, "small_box", 
             0, true);        
         
@@ -35,6 +34,10 @@ public class Program {
         }
     }
     
+    /**
+     * Prints Product information to STDOUT
+     * @param product Product instance
+     */
     public static void showProduct(Product product) {
         System.out.println(product);
     }
