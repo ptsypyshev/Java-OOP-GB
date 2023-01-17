@@ -4,7 +4,7 @@
 // а так же метод записаться в группу продлённого дня.
 package sm02;
 
-public class JuniorStudent extends Student{
+public class JuniorStudent extends Student implements Player, Extender{
     private boolean Extended;
 
     public boolean isExtended() {

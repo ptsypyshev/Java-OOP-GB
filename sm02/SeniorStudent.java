@@ -4,11 +4,13 @@
 //      4.2 Записаться на экзамен
 //      4.3 Играть, выводящий на экран фразу "Я играю в Dota"
 //      4.4 Учиться, выводящий на экран фразу "Я должен учиться"
+// Бросает курить
+// Не играет
 package sm02;
 
 import java.util.ArrayList;
 
-public class SeniorStudent extends Student{
+public class SeniorStudent extends Student implements Smoker, Examer{
     private ArrayList<String> ExamList;
 
     public ArrayList<String> getExamList() {
@@ -25,22 +27,26 @@ public class SeniorStudent extends Student{
         this.ExamList = new ArrayList<>();
     }
 
-    @Override
-    public void play() {
-        System.out.println("Я играю в Dota");        
+    public void smoke() {
+        System.out.println("Я бросаю курить");  
     }
+
+    // @Override
+    // public void play() {
+    //     System.out.println("Я играю в Dota");        
+    // }
 
     @Override
     public void study() {
         System.out.println("Я должен учиться");  
     }
 
-    public void addExam(String exam) {
+    public void passExam(String exam) {
         this.ExamList.add(exam);
     }
 
     @Override
     public String toString() {
-        return String.format("%s, isExtended: %s\n", super.toString(), this.getExamList());
+        return String.format("%s, Passed exams: %s\n", super.toString(), this.getExamList());
     }
 }

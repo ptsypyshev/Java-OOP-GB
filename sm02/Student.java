@@ -33,7 +33,6 @@ public abstract class Student {
         this.classNumber = classNumber;
     }
 
-    public abstract void play();
     public abstract void study();
 
     @Override

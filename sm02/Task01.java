@@ -28,10 +28,23 @@
 package sm02;
 
 public class Task01 {
-    public static void showInfo(Student s) {        
-        System.out.println(s);
-        s.play();
+    public static void showInfo(Student s) {
+        if (s instanceof Player) {
+            ((Player) s).play();
+        }
+        if (s instanceof Smoker) {
+            ((Smoker) s).smoke();
+        }
+
+        if (s instanceof Extender) {
+            ((Extender) s).toExtendedGroup();
+        }
+        if (s instanceof Examer) {
+            ((Examer) s).passExam("Maths");
+            ((Examer) s).passExam("English");
+        }
         s.study();
+        System.out.println(s);
         System.out.println();
     }
 
@@ -40,15 +53,9 @@ public class Task01 {
         Student mid1 = new MiddleStudent("Petr", 4, 7);
         Student sen1 = new SeniorStudent("Alex", 3, 11);
 
-        showInfo(jun1);
-        ((JuniorStudent) jun1).toExtendedGroup();
-        showInfo(jun1);
-
-        showInfo(mid1);
-        
-        showInfo(sen1);
-        ((SeniorStudent) sen1).addExam("Maths");
-        ((SeniorStudent) sen1).addExam("English");
-        showInfo(sen1);
+        Student[] studentList = new Student[]{jun1, mid1, sen1};
+        for (Student student : studentList) {
+            showInfo(student);
+        }
     }
 }
