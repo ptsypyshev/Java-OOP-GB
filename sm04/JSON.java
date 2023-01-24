@@ -1,7 +1,5 @@
 package sm04;
 
-import java.util.Arrays;
-
 public class JSON {
     public static <T> String Marshal(T obj) {
         if (obj instanceof Worker) {
