@@ -1,43 +1,69 @@
 package hw05.Core.MVP;
 
+import java.util.Collection;
+
 import hw05.Core.CustomExceptions.BadEmailException;
 import hw05.Core.Models.Contact;
 import hw05.Core.Models.Email;
 import hw05.Core.Models.PhoneNumber;
 
+/**
+ * The Class which provides all business logics
+ */
 public class Presenter {
     private Model model;
     private View view;
 
+    /**
+     * It is a constructor for Presenter class
+     * 
+     * @param model Model object
+     * @param view  Any implementation of View interface
+     */
     public Presenter(Model model, View view) {
         this.model = model;
         this.view = view;
     }
 
-    public void loadFromFile() {
+    /**
+     * Loads information from DB
+     */
+    public void load() {
         model.load();
     }
 
-    public void saveToFile() {
+    /**
+     * Saves information from DB
+     */
+    public void save() {
         model.save();
     }
 
-    public void mainMenu() {        
+    /**
+     * Provides main menu operations
+     */
+    public void mainMenu() {
         view.welcome();
         while (true) {
             view.showMainMenu();
             int cmd = view.getCmd();
+            view.showChosenCmd(cmd);
             switch (cmd) {
                 case 0:
-                    view.bye();
                     return;
                 case 1:
                     String[] newContactArr = view.addContactMenu();
                     addContact(newContactArr);
                     break;
                 case 2:
-                    String[] editContactArr = view.editContactMenu(this.model.getPhoneBook().getContacts());
+                    Collection<Contact> contacts = this.model.getPhoneBook().readAll().values();
+                    String[] editContactArr = view.editContactMenu(contacts);
                     editContact(editContactArr);
+                    break;
+                case 3:
+                    contacts = this.model.getPhoneBook().readAll().values();
+                    String contactToRemove = view.removeContactMenu(contacts);
+                    removeContact(contactToRemove);
                     break;
                 case 4:
                     readAllContacts();
@@ -52,6 +78,11 @@ public class Presenter {
         }
     }
 
+    /**
+     * Makes contact from String[] array of raw data
+     * @param data      String[] array of raw data
+     * @return          Contact object if all data valid or null otherwise
+     */
     private Contact makeContact(String[] data) {
         String name = data[0];
         try {
@@ -66,28 +97,29 @@ public class Presenter {
         return null;
     }
 
-    private void addContact(String[] data){
+    /**
+     * Add contact command
+     * @param data      String[] array of raw data
+     * @return          true if contact was added sucessfully
+     */
+    private boolean addContact(String[] data) {
         Contact contact = makeContact(data);
-        this.model.getPhoneBook().create(contact);
-        view.sucessAddContact();
-    }
-
-    private void readContact(String searchStr) {
-        Contact contact = this.model.getPhoneBook().search(searchStr);
-        if (contact == null) {
-            view.noContactFound();
-        } else {
-            view.showContact(contact);
+        if (contact != null) {
+            this.model.getPhoneBook().create(contact);
+            view.sucessAddContact();
+            return true;
         }
+        return false;
     }
 
-    private void readAllContacts() {
-        view.showAllContacts(this.model.getPhoneBook().getContacts());
-    }
-
-    private boolean editContact(String[] data){
+    /**
+     * Edit contact command
+     * @param data      String[] array of raw data
+     * @return          true if contact was changed sucessfully
+     */
+    private boolean editContact(String[] data) {
         String name = data[0];
-        if (!this.model.getPhoneBook().getContacts().containsKey(name)) {
+        if (!this.model.getPhoneBook().readAll().containsKey(name)) {
             if (!view.askAddNewContact()) {
                 return false;
             } else {
@@ -100,5 +132,44 @@ public class Presenter {
         view.sucessEditContact();
         return true;
     }
-    
+
+    /**
+     * Remove contact command
+     * @param name      Name of contact to remove
+     * @return          true if contact was removed sucessfully
+     */
+    private boolean removeContact(String name) {
+        Contact contact = this.model.getPhoneBook().search(name);
+        if (contact == null) {
+            view.noContactFound();
+            return false;
+        }
+
+        if (view.removeContactAccept(contact)) {
+            this.model.getPhoneBook().delete(name);
+            view.sucessRemovedContact();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Read contact command
+     * @param searchStr     Search string (name)
+     */
+    private void readContact(String searchStr) {
+        Contact contact = this.model.getPhoneBook().search(searchStr);
+        if (contact == null) {
+            view.noContactFound();
+        } else {
+            view.showContact(contact);
+        }
+    }
+
+    /**
+     * Read all contacts command
+     */
+    private void readAllContacts() {
+        view.showAllContacts(this.model.getPhoneBook().readAll().values());
+    }
 }

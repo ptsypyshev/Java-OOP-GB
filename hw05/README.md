@@ -1,62 +1,15 @@
+# ДЗ 04
 Создать телефонный справочник с возможностью импорта и экспорта данных в нескольких форматах.
-под форматами понимаем структуру файлов, например:
+Под форматами понимаем структуру файлов, например:
 - в файле на одной строке хранится одна часть записи, пустая строка - разделитель
 
+Реализовано разделение программы по шаблону MVP (Model-View-Presenter):
+- Model осуществляет работу с телефонным справочником, а также загрузку/выгрузку во внешнее хранилище;
+- View представляет собой интерфейс, который необходимо имплементировать для осуществление вывода информации для пользователя;
+- Presenter осуществляет взамиодествие с пользователем посредством взаимодействия с View и Model.
 
-Contact -> Comparable
-<!-- int ID -->
-String name
-List<Email> emails
-List<PhoneNumber> phoneNumbers
+В качестве внешнего хранилища реализована работа с CSV файлом, при этом имеется возможность заменить его на любое другое внешнее хранилище (требуется имплементировать интерйейс ExternalData).
 
-Email
-- String _email
-- isValid()
+В качестве хранилища для оперативной работы используется HashMap. Но опять же имеется возможность заменить его, например, на внешнюю СУБД. Для этого нужно имплементировать интерфейс PhoneBook.
 
-PhoneNumber
-- String _phoneNumber
-- isValid()
-
-PhoneBook 
-<!-- static int idCounter; -->
-Map<String,Contact> contacts
-
-create(Contact);
-get(idx);
-get(name);
-modify(idx, newContact)
-delete(idx);
-delete(name);
-search(searchStr);
-
-View
-menu();
-add();
-read();
-readAll();
-edit();
-delete();
-search();
-
-interface Importer
-load();
-
-ImportContactsTXT implements Importer
-load();
-ImportContactsCSV implements Importer
-load();
-ImportContactsXML implements Importer
-load();
-
-interface Exporter
-save();
-
-ExportContactsTXT implements Exporter
-save();
-ExportContactsCSV implements Exporter
-save();
-ExportContactsXML implements Exporter
-save();
-
-<!-- name;email;phone
-vasya;vas@ya.ru;123 -->
+В классе App инициализируем все объекты, которые являются имплементацией интерфейсов, отвечающих за работу с данными.

@@ -1,54 +1,58 @@
 package hw05.Core.Models;
 
-// import java.util.List;
-
-public class Contact {
+/**
+ * Class of Contact objects
+ */
+public class Contact implements Comparable<Contact> {
     private String name;
-    private Email emails;
-    private PhoneNumber phoneNumbers;
-    // private List<Email> emails;
-    // private List<PhoneNumber> phoneNumbers;
+    private Email email;
+    private PhoneNumber phoneNumber;
 
-    // public Contact(String name, List<Email> email, List<PhoneNumber> phoneNumber) {
+    /**
+     * It is a constructor for Contact class
+     * @param name          Contact name
+     * @param email         Contact email
+     * @param phoneNumber   Contact phone number
+     */
     public Contact(String name, Email email, PhoneNumber phoneNumber) {
         this.name = name;
-        this.emails = email;
-        this.phoneNumbers = phoneNumber;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * Returns Contact name
+     * @return  this.name
+     */
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * Returns Contact email
+     * @return  this.email
+     */
+    public Email getEmail() {
+        return this.email;
     }
 
-    // public List<Email> getEmails() {
-    //     return this.emails;
-    // }
-
-    public Email getEmails() {
-        return this.emails;
-    }
-
-    // public void setEmail(int idx, Email email) {
-    //     // if (idx >= this.emails.size()) {
-    //     //     throw new IndexOutOfBoundsException();
-    //     // }
-    //     this.emails.set(idx, email);
-    // }
-
-    public PhoneNumber getPhoneNumbers() {
-        return this.phoneNumbers;
+    /**
+     * Returns Contact phone number
+     * @return  this.phoneNumber
+     */
+    public PhoneNumber getPhoneNumber() {
+        return this.phoneNumber;
     }
 
     @Override
     public String toString() {
-        return String.format("Name: %s; Email: %s; Phone: %s\n", this.getName(), this.getEmails(), this.getPhoneNumbers());
+        return String.format("Name: %s; Email: %s; Phone: %s\n", this.getName(), this.getEmail(),
+                this.getPhoneNumber());
     }
 
-    // public void setPhoneNumbers(int idx, PhoneNumber phoneNumber) {
-    //     this.phoneNumbers.set(idx, phoneNumber);
-    // }
+    @Override
+    public int compareTo(Contact anotherContact) {
+        return this.getName().compareTo(anotherContact.getName());
+        
+    }
 }

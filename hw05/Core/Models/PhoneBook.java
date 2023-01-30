@@ -1,41 +1,49 @@
 package hw05.Core.Models;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class PhoneBook  {
-    private Map<String,Contact> contacts;
+/**
+ * Interface which should be implemented to use CRUD operations with Phonebook
+ */
+public interface PhoneBook {
+    /**
+     * Creates the contact in the PhoneBook
+     * @param contact       Contact object
+     * @return              true if contact was created
+     */
+    public boolean create(Contact contact);
 
-    public PhoneBook(Map<String,Contact> contacts) {
-        this.contacts = contacts;
-    }
+    /**
+     * Reads the contact by its name from the PhoneBook 
+     * @param name          Name of contact
+     * @return              Contact object if name is found and null otherwise
+     */
+    public Contact read(String name);
 
-    public PhoneBook() {
-        this.contacts = new HashMap<String, Contact>();
-    }
+    /**
+     * Reads whole the PhoneBook 
+     * @return      Map of Contacts
+     */
+    public Map<String,Contact> readAll();
 
-    public Map<String,Contact> getContacts() {
-        return this.contacts;
-    }
+    /**
+     * Modifies the contact in the PhoneBook
+     * @param contact       Contact object
+     * @return              true if contact was modified
+     */
+    public boolean modify(Contact contact);
 
-    private void setContact(Contact contact) {
-        this.contacts.put(contact.getName(), contact);
-    }
+    /**
+     * Removes the contact in the PhoneBook
+     * @param name          Name of contact
+     * @return              true if contact was removed
+     */
+    public boolean delete(String name);
 
-    public void create(Contact contact) {
-        this.setContact(contact);
-    }
-
-    public void modify(Contact contact) {
-        this.setContact(contact);
-    }
-
-    public void delete(String name) {
-        this.contacts.remove(name);
-    }
-
-    public Contact search(String name) {
-        return this.getContacts().get(name);
-    }
-
+    /**
+     * Searches contact by its name in the PhoneBook
+     * @param contact       Contact object
+     * @return
+     */
+    public Contact search(String name);
 }
